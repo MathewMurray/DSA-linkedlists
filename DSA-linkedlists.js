@@ -653,3 +653,19 @@ display(sortList);
 //         }
 //     }
 // }
+  insertSorted(value){
+    let newNode = new _Node(value);
+    let node = this.head;
+    let prevNode = null;
+    while(node && node.value < value) {
+      prevNode = node;
+      node = node.next;
+    }
+    if(prevNode === null){
+      this.head = newNode;
+    }
+    else {
+    prevNode = newNode;
+    newNode = node;
+    }
+  }
