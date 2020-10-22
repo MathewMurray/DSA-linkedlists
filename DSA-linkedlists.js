@@ -13,7 +13,9 @@ class _Node {
 }
 
 
-// Notice that the node class is named with a _ (underscore). The underscore simply indicates that the node class is a private class that should not be accessible by anyone else other than the linked list class. Any time the linked list class wants to create a new node, it creates an instance of the node class. The node class's constructor accepts a variable value that holds the data. Each node also has a next variable that serves as a pointer to the next node.
+// Notice that the node class is named with a _ (underscore). The underscore simply indicates that the node class is a private class that should not be accessible 
+// by anyone else other than the linked list class. Any time the linked list class wants to create a new node, it creates an instance of the node class. The node 
+// class's constructor accepts a variable value that holds the data. Each node also has a next variable that serves as a pointer to the next node.
 
 // Operations in a linked list
 // The primary operations in a linked list are insert, remove, and get (find).
@@ -26,18 +28,25 @@ class _Node {
 // at the end of the list (insertLast).
 // anywhere in the list, between 2 nodes (insert, insertAt).
 
+// The linked list has a head to indicate the beginning of the list. The head always contains the 1st node. In this case, we start with an empty list,
+// represented by null.
 class LinkedList {
   constructor() {
     this.head = null;
   }
+// Inserting at the beginning of the list can be achieved by the following steps:
 
+// Create a new node item
+// Point the head to that new node
   insertFirst(item) {
     this.head = new _Node(item, this.head);
   }
+//  Inserting at the beginning of the list is an O(1) operation since you are inserting at only 1 place, the 1st position, regardless of the length of the list.
 
   insertBefore(newItem, nextItem) {
     let tempNode = this.head;
-    // what if you're on that value? Even though you have an insert in front of list, this must be considered because it might be positon specific. He doesn't care where it is, it just must be in front of that item
+    // what if you're on that value? Even though you have an insert in front of list, this must be considered because it might be positon specific.
+    // He doesn't care where it is, it just must be in front of that item
     while (tempNode.next !== null) {
       if (tempNode.next.value == nextItem) {
         // you're getting confused at all the points tempnode is being reassigned
@@ -93,7 +102,13 @@ class LinkedList {
     n.next = current;
     previous.next = n;
   }
+// Inserting at the end of the list is a bit more complex and can be achieved by the following steps:
 
+// Create a new node item
+// Check to see if the list is empty, if it is, then insert the new item as the only item in the list
+// Start at the beginning of the list and move through the list until you reach the end of the list
+// Set the end node's next pointer to the new node
+// The new node's next pointer is null (indicating that the new node now is the last node on the list)
   insertLast(item) {
     if (this.head === null) {
       this.insertFirst(item);
@@ -112,7 +127,12 @@ class LinkedList {
       tempNode.next = new _Node(item, null);
     }
   }
+// Inserting at the end of the list requires iterating over all of the nodes individually in sequence until you reach the end. This makes the performance of 
+// inserting at the end to be O(n).
 
+// Retrieval
+// Retrieving values from the linked list is straightforward. You can just traverse the list, comparing the value stored in each node with the value you are searching.
+// When the item is found, return the node. The following code snippet shows the implementation of the retrieval (find) operation.
   find(item) {
     // Start at the head
     let currNode = this.head;
@@ -258,28 +278,6 @@ class LinkedList {
 
 
 }
-
-// The linked list has a head to indicate the beginning of the list. The head always contains the 1st node. In this case, we start with an empty list, represented by null.
-
-// Inserting at the beginning of the list can be achieved by the following steps:
-
-// Create a new node item
-// Point the head to that new node
-
-// Inserting at the end of the list is a bit more complex and can be achieved by the following steps:
-
-// Create a new node item
-// Check to see if the list is empty, if it is, then insert the new item as the only item in the list
-// Start at the beginning of the list and move through the list until you reach the end of the list
-// Set the end node's next pointer to the new node
-// The new node's next pointer is null (indicating that the new node now is the last node on the list)
-
-//  Inserting at the beginning of the list is an O(1) operation since you are inserting at only 1 place, the 1st position, regardless of the length of the list. Inserting at the end of the list requires iterating over all of the nodes individually in sequence until you reach the end. This makes the performance of inserting at the end to be O(n).
-
-
-// Retrieval
-// Retrieving values from the linked list is straightforward. You can just traverse the list, comparing the value stored in each node with the value you are searching. When the item is found, return the node. The following code snippet shows the implementation of the retrieval (find) operation.
-
 
 // Removal
 // When deleting an item, there are 3 cases that you need to consider. You can
@@ -434,7 +432,7 @@ function WhatDoesThisProgramDo(lst) {
   }
 }
 
-// answer: removes duplicates from unsorted list. Logarithmic time O(log(n))??? because if input increases in size, the time complexity increases at a slow rate. 
+// answer: removes duplicates from unsorted list. Logarithmic time O(n*2). 
 
 // Reverse a list
 // Write an algorithm to reverse a linked list. The time complexity of your algorithm should be linear (O(n)). For this exercise, notice we are not asking you just to print the linked list in reverse or use another linked list to store the value in reverse order. Your program should reverse the direction of a given singly linked list. In other words, all pointers should point backward. BONUS: Solve this problem using both recursive and iterative algorithms.
@@ -667,5 +665,73 @@ display(sortList);
     else {
     prevNode = newNode;
     newNode = node;
+    }
+  }
+//constent time complexity - same amount of time to do opperation no matter of the linked list
+class _Dnode {
+  constructor(prev,value,next){
+    this.prev = prev;
+    this.value = value;
+    this.next = next;
+  }
+}
+
+class Dlink {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+    prepend(value){
+      oldHead = this.head
+      this.head = new _Dnode(null, value,oldHead)
+      if(oldHead) oldHead.prev = this.head
+    //inserts node at begining of double linked list
+  }
+    append(value){
+      if(!this.tail.next)
+      newNode = new _Dnode(this.tail,value,null)
+      oldTail = this.tail
+      this.tail = newNode
+      oldTail.next = this.tail
+    //inserts node at end of double linked list
+  }
+
+
+
+}
+
+
+  pop(){
+    //removes last node in list
+  }
+
+  removeFirst(){
+    //removes the first node in list
+  }
+
+
+[1,5,3,4,2,7]
+
+
+
+  function sortList(linkedList) {
+    //acending order sort
+    // find lowest value in list then set as first node
+    let currentNode = linkedList.head
+    let nextNode = currentNode.next
+    let swap = 0
+    while(swap != 0){
+      if(currentNode > nextNode){
+        swap += 1
+        let tempNode.value = currentNode.value
+        nextNode.value = CurrentNode.value
+        tempNode.value = nextNode.value
+      }
+    }
+    //keep track of lowest value, checking value of each node
+    while(!node.next==null){
+      //node.value < node.next if true set node = lowestNode then compare to next node in list
+      
+      //currentnode > nextnode, switch values 
     }
   }
